@@ -11,6 +11,10 @@ https://docs.djangoproject.com/en/5.0/ref/settings/
 """
 
 from pathlib import Path
+import os
+import cloudinary
+import cloudinary.uploader
+import cloudinary.api
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -36,18 +40,36 @@ INSTALLED_APPS = [
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
-    'django.contrib.staticfiles',
-    'productsapi'
+    'django.contrib.staticfiles',  # Make sure this is listed only once
+    'productsapi',
+    'rest_framework',
+    'corsheaders',
+    # ... other apps
 ]
+
+
+CLOUDINARY_URL = "cloudinary://935838691454949:2ZR0CSz_KyiZUN96SEmtB9Zwp7U@ddw1upvx3"
+
+
+
+# Cloudinary Configuration
+cloudinary.config(
+    cloud_name='ddw1upvx3',
+    api_key='935838691454949',
+    api_secret='2ZR0CSz_KyiZUN96SEmtB9Zwp7U',
+)
+
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+
 ]
 
 ROOT_URLCONF = 'clothingsite.urls'
@@ -76,8 +98,12 @@ WSGI_APPLICATION = 'clothingsite.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'portfolio_data_ar0w',
+        'USER': 'portfolio_data_ar0w_user',
+        'PASSWORD': 'JusyAtgVEg1yWMI6NJETCkBbpXptEOy3',
+        'HOST': 'dpg-cm8gpr8cmk4c7391v69g-a.oregon-postgres.render.com',
+        'PORT': '',
     }
 }
 
@@ -122,3 +148,16 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+MEDIA_URL = '/product_images/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'product_images')
+
+
+CORS_ALLOWED_ORIGINS = [
+    "http://localhost:3000",  # Add your frontend domain or localhost port
+    # Add more origins if needed
+]
+
+# You can also use the following setting to allow all origins (not recommended for production):
+# CORS_ALLOW_ALL_ORIGINS = True
+
