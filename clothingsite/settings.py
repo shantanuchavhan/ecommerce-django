@@ -161,7 +161,9 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'product_images')
 
 
 CORS_ALLOWED_ORIGINS = [
-    "http://localhost:3000",  # Add your frontend domain or localhost port
+    "http://localhost:3000",
+      "https://clothx.onrender.com",
+        "https://cloethx.netlify.app"  # Add your frontend domain or localhost port
     
 ]
 
