@@ -15,6 +15,7 @@ import os
 import cloudinary
 import cloudinary.uploader
 import cloudinary.api
+import dj_database_url
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -27,7 +28,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-1i#1jibxf7!4c6tq-g&x!2^5dq1xqrsx+wdyqauhe&&k9w&%i^'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = os.environ.get("DEBUG","False").lower()=="true"
 
 ALLOWED_HOSTS = []
 
@@ -108,6 +109,12 @@ DATABASES = {
 }
 
 
+database_url = os.environ.get("DATABASE_URL") 
+#'postgres://portfolio_data_ar0w_user:JusyAtgVEg1yWMI6NJETCkBbpXptEOy3@dpg-cm8gpr8cmk4c7391v69g-a.oregon-postgres.render.com/portfolio_data_ar0w'
+# 
+
+DATABASES["default"] = dj_database_url.parse(database_url)
+
 # Password validation
 # https://docs.djangoproject.com/en/5.0/ref/settings/#auth-password-validators
 
@@ -155,7 +162,7 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'product_images')
 
 CORS_ALLOWED_ORIGINS = [
     "http://localhost:3000",  # Add your frontend domain or localhost port
-    # Add more origins if needed
+    
 ]
 
 # You can also use the following setting to allow all origins (not recommended for production):
